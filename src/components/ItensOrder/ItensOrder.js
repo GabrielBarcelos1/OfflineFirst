@@ -4,6 +4,7 @@ import {View,Text} from 'react-native'
 function Repository({data}){
   return(
    <View>
+     <Text>{data.idOrder}</Text>
      <Text>{data.name}</Text>
      <Text>{data.orderDate}</Text>
     {data.itensOrder.map((item, key) => {

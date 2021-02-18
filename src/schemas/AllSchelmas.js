@@ -1,8 +1,9 @@
 
 export const Order = {
   name: "Order",
-  primaryKey: "name",
+  primaryKey: "idOrder",
   properties: {
+    idOrder: {type: 'int', indexed : true},
     name: "string",
     orderDate: "string",
     itensOrder: "ItensOrder[]"

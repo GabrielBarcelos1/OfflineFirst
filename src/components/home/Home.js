@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import {Container,Input,TextInput,SaveButton} from './style'
+import {Text ,Button} from 'native-base';
 import {Keyboard} from 'react-native';
 import getRealm from '../../services/realm'
 
@@ -16,6 +17,7 @@ function Home({navigation}){
       const realm = await getRealm()
       const dateToday = Date()
       
+      
       const data = {
         name: valueOrderName,
         orderDate: dateToday,
@@ -29,8 +31,6 @@ function Home({navigation}){
     realm.write(()=>{
       realm.create('Order',data,'modified')
     })
-    const itenBd = realm.objects('Order');
-    setIntensOrder(itenBd)
     SetValueIDSku("")
     SetValueAmount("")
     Keyboard.dismiss()
@@ -47,15 +47,12 @@ function Home({navigation}){
       <TextInput>Digite o id do produto</TextInput>
       <Input placeholder="Quantidade"onChangeText={SetValueAmount} value={valueAmount}></Input>
       <TextInput>Quantidade</TextInput>
-      <SaveButton onPress={handleSave}>
-        <TextInput>Salvar</TextInput>
-      </SaveButton>
-        <SaveButton onPress={()=> navigation.navigate('Orders')}>
-            <TextInput>ir para pedidos offline</TextInput>
-        </SaveButton>
-        <SaveButton onPress={()=> navigation.navigate('WebViewComponent')}>
-            <TextInput>ir para webView</TextInput>
-        </SaveButton>
+        <Button onPress={()=> navigation.navigate('Orders')}>
+            <Text>ir para pedidos offline</Text>
+        </Button>
+        <Button onPress={()=> navigation.navigate('WebViewComponent')}>
+            <Text>ir para webView</Text>
+        </Button>
     </Container>
 
   )

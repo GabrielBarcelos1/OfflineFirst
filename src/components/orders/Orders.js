@@ -16,14 +16,14 @@ function Orders({navigation}) {
       }
     }
     ShowAllOrders();
-  }, []);
+  }, [,itensOrder]);
 
   return (
     <View>
       <List
         keyboardShouldPersistTaps="handled"
         dataArray={itensOrder}
-        keyExtractor={(item) => String(item.name)}
+        keyExtractor={(item) => String(item.idOrder)}
         renderItem={({item}) => {
           return(
             <ListItem>
