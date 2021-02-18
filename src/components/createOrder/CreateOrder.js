@@ -8,7 +8,7 @@ function CreateOrder({navigation}) {
     try{
       const realm = await getRealm()
       const dateToday = Date()
-      const id = realm.objects('Order').length
+      const id = realm.objects('Order').max("idOrder") == null ? 0 : realm.objects('Order').max("idOrder")
       
       const data = {
         idOrder: id+1,

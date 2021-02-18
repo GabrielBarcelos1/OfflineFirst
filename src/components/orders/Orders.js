@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {View} from 'react-native';
 import getRealm from '../../services/realm';
 import ItensOrder from '../ItensOrder/ItensOrder';
-import {  Button, Text ,List,ListItem } from 'native-base';
+import Icon from "react-native-vector-icons/AntDesign"
+import {Button, Text, List, ListItem} from 'native-base';
 function Orders({navigation}) {
   const [itensOrder, setIntensOrder] = useState([]);
   useEffect(() => {
@@ -16,7 +17,18 @@ function Orders({navigation}) {
       }
     }
     ShowAllOrders();
-  }, [,itensOrder]);
+  }, [, itensOrder]);
+
+  async function deleteOrder(index){
+    try {
+    const realm = await getRealm();
+    const Obj = realm.objects('Order').filtered(`idOrder == ${index}`)
+    realm.write(()=>{
+      realm.delete(Obj)
+    })}catch(err){
+      console.log(err)
+    }
+  }
 
   return (
     <View>
@@ -25,13 +37,20 @@ function Orders({navigation}) {
         dataArray={itensOrder}
         keyExtractor={(item) => String(item.idOrder)}
         renderItem={({item}) => {
-          return(
-            <ListItem>
-            <ItensOrder data={item} />
+          return (
+            <ListItem
+              onPress={() =>
+                navigation.navigate('CreateItens', {id: item.idOrder})
+              }>
+              <ItensOrder data={item} />
+              <Icon name="delete" size={22} color="#ff382a" onPress={()=>deleteOrder(item.idOrder)}/>
             </ListItem>
-          )
-        }}></List>
-        <Button primary onPress={()=> navigation.navigate('CreateOrder')}><Text> Adicionar um pedido </Text></Button>
+          );
+        }}>
+      </List>
+      <Button primary onPress={() => navigation.navigate('CreateOrder')}>
+          <Text> Adicionar um pedido </Text>
+        </Button>
     </View>
   );
 }
