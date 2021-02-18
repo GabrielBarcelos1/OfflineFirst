@@ -6,11 +6,11 @@ function Repository({data}){
    <View>
      <Text>{data.name}</Text>
      <Text>{data.orderDate}</Text>
-    {data.itensOrder.map((iten, key) => {
+    {data.itensOrder.map((item, key) => {
       return(
         <View key={key}>
-          <Text>{iten.IdSku}</Text>
-          <Text>{iten.amount}</Text>
+          <Text>{item.IdSku}</Text>
+          <Text>{item.amount}</Text>
         </View>
       )
     })}

@@ -1,16 +1,14 @@
 import React,{useState} from 'react'
-import {Container,Input,TextInput,SaveButton, List} from './style'
+import {Container,Input,TextInput,SaveButton} from './style'
 import {Keyboard} from 'react-native';
 import getRealm from '../../services/realm'
-import ItensOrder from '../ItensOrder/ItensOrder'
-import { WebView } from 'react-native-webview';
 
 
-function Home(){
+
+function Home({navigation}){
   const [valueIdSku, SetValueIDSku] = useState("")
   const [valueAmount, SetValueAmount] = useState("")
   const [valueOrderName, setValueOrderName] = useState("")
-  const [itensOrder,setIntensOrder] = useState([])
 
   
   async function handleSave(){
@@ -52,16 +50,12 @@ function Home(){
       <SaveButton onPress={handleSave}>
         <TextInput>Salvar</TextInput>
       </SaveButton>
-      <List
-          keyboardShouldPersistTaps="handled"
-          data={itensOrder}
-          keyExtractor={item => String(item.name)}
-          renderItem={({item}) => (
-            <ItensOrder
-              data={item}
-            />
-          )}></List>
-      <WebView source={{ uri: 'https://cassol.com.br' }} />
+        <SaveButton onPress={()=> navigation.navigate('Orders')}>
+            <TextInput>ir para pedidos offline</TextInput>
+        </SaveButton>
+        <SaveButton onPress={()=> navigation.navigate('WebViewComponent')}>
+            <TextInput>ir para webView</TextInput>
+        </SaveButton>
     </Container>
 
   )
