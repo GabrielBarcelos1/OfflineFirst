@@ -15,7 +15,7 @@ function CreateOrder({navigation}) {
         name: valueOrderName,
         orderDate: dateToday,
         itensOrder:[]
-          
+  
       }
       
     realm.write(()=>{
