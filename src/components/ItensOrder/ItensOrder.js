@@ -2,10 +2,11 @@ import React from 'react'
 import {View,Text} from 'react-native'
 
 function Repository({data}){
+  let datateste = data.orderDate
   return(
    <View >
      <Text>Nome do pedido: {data.name}</Text>
-     <Text>data do pedido: {data.orderDate}</Text>
+     <Text>data do pedido: {data.orderDate.toISOString().substring(0, 10)}</Text>
     {data.itensOrder.map((item, key) => {
       return(
         <View key={key}>

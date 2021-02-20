@@ -7,7 +7,7 @@ function CreateOrder({navigation}) {
   async function handleSave(){
     try{
       const realm = await getRealm()
-      const dateToday = Date()
+      const dateToday = new Date()
       const id = realm.objects('Order').max("idOrder") == null ? 0 : realm.objects('Order').max("idOrder")
       
       const data = {

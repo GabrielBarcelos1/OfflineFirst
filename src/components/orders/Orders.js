@@ -43,7 +43,7 @@ function Orders({navigation}) {
                 navigation.navigate('CreateItens', {id: item.idOrder})
               }>
               <ItensOrder data={item} />
-              <Icon name="delete" size={22} color="#ff382a" onPress={()=>deleteOrder(item.idOrder)}/>
+              <Icon name="delete" size={22} color="#ff382a" onPress={()=>deleteOrder(item.idOrder)}/> 
             </ListItem>
           );
         }}>

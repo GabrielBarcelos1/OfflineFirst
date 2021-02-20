@@ -5,7 +5,7 @@ export const Order = {
   properties: {
     idOrder: {type: 'int', indexed : true},
     name: "string",
-    orderDate: "string",
+    orderDate: "date",
     itensOrder: "ItensOrder[]"
   }
 }
