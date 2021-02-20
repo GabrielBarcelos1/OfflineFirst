@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View} from 'react-native';
 import getRealm from '../../services/realm';
+import Icon from 'react-native-vector-icons/dist/AntDesign';
 import ItensOrder from '../ItensOrder/ItensOrder';
 import {Button, Text, List, ListItem} from 'native-base';
 function Orders({navigation}) {
@@ -42,7 +43,7 @@ function Orders({navigation}) {
                 navigation.navigate('CreateItens', {id: item.idOrder})
               }>
               <ItensOrder data={item} />
-              {/* <Icon name="delete" size={22} color="#ff382a" onPress={()=>deleteOrder(item.idOrder)}/> */}
+              <Icon name="delete" size={22} color="#ff382a" onPress={()=>deleteOrder(item.idOrder)}/>
             </ListItem>
           );
         }}>
