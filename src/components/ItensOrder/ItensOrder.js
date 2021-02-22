@@ -11,7 +11,7 @@ function Repository({data}){
       return(
         <View key={key}>
           <Text>Id do Sku: {item.IdSku}</Text>
-          <Text> Quantidade: {item.amount}</Text>
+          <Text> Quantidadea: {item.amount}</Text>
         </View>
       )
     })}
