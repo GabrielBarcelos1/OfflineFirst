@@ -1,27 +1,15 @@
 import styled from 'styled-components'
+import {getStatusBarHeight} from "react-native-status-bar-height"
+
 
 export const Container = styled.View`
 flex:1;
-display:flex;
-align-items:center;
-
-`
-export const Input = styled.TextInput`
-
-
-`
-export const TextInput = styled.Text`
-
-
-`
-export const SaveButton = styled.TouchableOpacity`
-
-background-color:red;
-
+padding-top: ${getStatusBarHeight(true)}px;
+background-color:white
 `
 export const List = styled.FlatList.attrs({
   contentContainerStyle:{ paddingHorizontal: 20 },
   showsVerticalScrollIndicator: false,
 })`
-margin-top:20px;
+padding-top:100px;
 `

@@ -21,7 +21,7 @@ function CreateOrder({navigation}) {
     realm.write(()=>{
       realm.create('Order',data,'modified')
     })
-    navigation2.navigate('Orders')
+    navigation2.navigate('Home')
   }
     catch(err){
       console.log("deu erro em algo" + err)
@@ -32,7 +32,7 @@ function CreateOrder({navigation}) {
       <Content>
         <Form>
           <Item floatingLabel>
-            <Label>Nome do pedido</Label>
+            <Label>Order name: </Label>
             <Input  value={valueOrderName} onChangeText={setValueOrderName}/>
           </Item>
         </Form>
