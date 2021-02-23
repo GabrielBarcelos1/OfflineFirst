@@ -32,7 +32,7 @@ function CreateOrder({navigation}) {
       <Content>
         <Form>
           <Item floatingLabel>
-            <Label>Order name: </Label>
+            <Label>Nome do Pedido: </Label>
             <Input  value={valueOrderName} onChangeText={setValueOrderName}/>
           </Item>
         </Form>

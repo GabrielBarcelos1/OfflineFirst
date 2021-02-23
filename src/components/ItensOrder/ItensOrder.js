@@ -6,11 +6,11 @@ function Repository({data}) {
   return (
     <View>
       <Text>
-        <TextPrimary>Order name: </TextPrimary>
+        <TextPrimary>Nome do Pedido: </TextPrimary>
         <Text>{data.name}</Text>
       </Text>
       <Text>
-        <TextPrimary>Order date:</TextPrimary>
+        <TextPrimary>Data do pedido:</TextPrimary>
         <Text> {data.orderDate.toISOString().substring(0, 10)}</Text>
       </Text>
       {data.itensOrder.map((item, key) => {

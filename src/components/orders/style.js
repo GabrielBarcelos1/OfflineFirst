@@ -4,7 +4,7 @@ import { ListItem } from 'native-base';
 
 export const Container = styled.View`
 flex:1;
-padding-top: ${30 + getStatusBarHeight(true)}px;
+padding-top: ${getStatusBarHeight(true)}px;
 background-color: white;
 `
 export const ContainerList = styled(ListItem)`

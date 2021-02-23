@@ -3,6 +3,7 @@ import getRealm from '../../services/realm';
 import Icon from 'react-native-vector-icons/dist/Feather';
 import ItensOrder from '../ItensOrder/ItensOrder';
 import {List, Title, Text, Picker, ActionSheet, Header, Button,Content, Root} from 'native-base';
+import {WebViewLoadContext} from '../../providers/ContextApp'
 import {
   Container,
   ContainerList,
@@ -15,7 +16,9 @@ var CANCEL_INDEX = 3;
 
 
 function Orders({navigation}) {
+  const { SetWebViewLoad } = React.useContext(WebViewLoadContext);
   const [itensOrder, setIntensOrder] = useState([]);
+  const navigation2 = navigation
   useEffect(() => {
     async function ShowAllOrders() {
       try {
@@ -40,9 +43,14 @@ function Orders({navigation}) {
       console.log(err);
     }
   }
+  function teste(){
+    SetWebViewLoad(2)
+    navigation2.navigate("CreateOrder")
+  }
 
 
   return (
+    <>
     <Root>
     <Container>
       <Title>Orders</Title>
@@ -77,11 +85,12 @@ function Orders({navigation}) {
             </ContainerList>
           );
         }}></List>
-      <ContainerAdd onPress={() => navigation.navigate('CreateOrder')}>
+      <ContainerAdd onPress={() => teste()}>
         <Icon name="plus" size={22} color="#fff"></Icon>
       </ContainerAdd>
     </Container>
     </Root>
+    </>
   );
 }
 
