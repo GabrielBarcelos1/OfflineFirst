@@ -4,17 +4,11 @@ import Icon from 'react-native-vector-icons/dist/Feather';
 import ItensOrder from '../OrderInfos/OrderInfos';
 import {
   List,
-  Title,
-  Text,
-  Picker,
   ActionSheet,
-  Header,
-  Button,
-  Content,
-  Root,
+  Root
 } from 'native-base';
 import {WebViewLoadContext} from '../../providers/ContextApp';
-import {Container, ContainerList, ContainerAdd} from './style';
+import {Container, ContainerList, ContainerAdd, Title} from './style';
 var BUTTONS = ['Editar', 'Sincronizar', 'Deletar', 'Cancelar'];
 var DESTRUCTIVE_INDEX = 2;
 var CANCEL_INDEX = 3;
@@ -56,7 +50,7 @@ function Orders({navigation}) {
     <>
       <Root>
         <Container>
-          <Title>Orders</Title>
+          <Title>Meus pedidos</Title>
           <List
             keyboardShouldPersistTaps="handled"
             dataArray={itensOrder}
@@ -65,7 +59,7 @@ function Orders({navigation}) {
               return (
                 <ContainerList
                   onPress={() =>
-                    navigation.navigate('ItensOrder', {data: item})
+                    navigation.navigate('ItensOrder', {id: item.idOrder})
                   }>
                   <ItensOrder data={item} />
 
@@ -82,7 +76,10 @@ function Orders({navigation}) {
                           title: 'ActionSheet',
                         },
                         (buttonIndex) => {
-                          if (buttonIndex === 2) {
+                          if(buttonIndex===0){
+                            navigation.navigate('CreateItens', {id: item.idOrder})
+                          }
+                          else if (buttonIndex === 2) {
                             deleteOrder(item.idOrder);
                           }
                         },

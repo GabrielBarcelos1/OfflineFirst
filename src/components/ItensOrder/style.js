@@ -25,8 +25,7 @@ right: 40px;
 align-items:center;
 justify-content:center;
 `
-export const Title = styled.Text`
-font-size:18px;
+export const TextPrimary = styled.Text`
 font-weight:bold;
-text-align:center;
+
 `

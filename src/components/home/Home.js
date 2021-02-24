@@ -1,7 +1,6 @@
 import React,{useEffect} from 'react'
 import {Container} from './style'
 import { WebView } from 'react-native-webview';
-import {Text} from 'react-native'
 import {WebViewLoadContext} from '../../providers/ContextApp'
 import { useFocusEffect } from '@react-navigation/native';
 
