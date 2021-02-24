@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import getRealm from '../../services/realm';
 import Icon from 'react-native-vector-icons/dist/Feather';
-import ItensOrder from '../ItensOrder/ItensOrder';
+import ItensOrder from '../itensOrder/ItensOrder';
 import {List, Title, Text, Picker, ActionSheet, Header, Button,Content, Root} from 'native-base';
 import {WebViewLoadContext} from '../../providers/ContextApp'
 import {
