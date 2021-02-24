@@ -2,9 +2,6 @@ import React,{useEffect} from 'react'
 import {View,Text} from 'react-native'
 function ItensOrder({navigation, route}){
 
-  useEffect(()=>{
-
-  },[])
 
 return(
   <View>
