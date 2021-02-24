@@ -28,7 +28,7 @@ function ItensOrder({navigation, route}) {
           <List
             keyboardShouldPersistTaps="handled"
             dataArray={idOrder}
-            keyExtractor={(item) => String(item.IdSku)}
+            keyExtractor={(item) => String(item.idItenOrder)}
             renderItem={({item}) => {
               return (
                 <ContainerList
