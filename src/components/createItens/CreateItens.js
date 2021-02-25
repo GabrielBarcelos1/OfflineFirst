@@ -10,7 +10,6 @@ function CreateItens({route, navigation}) {
   const [arrayItem, setarrayItem] = useState([]);
 
   const route2 = route;
-  const navigation2 = navigation;
 
   useEffect(() => {
     SetWebViewLoad(2);
@@ -28,14 +27,14 @@ function CreateItens({route, navigation}) {
     try {
       const realm = await getRealm();
       realm.write(() => {
-        arrayItem.itensOrder.push({idItenOrder: 18,  IdSku: InputIdSku, amount: inputAmount});
+        arrayItem.itensOrder.push({idItenOrder: 9772,  IdSku: InputIdSku, amount: inputAmount});
         const data = {
           idOrder: route2.params.id,
           itensOrder: arrayItem.itensOrder,
         };
         realm.create('Order', data, "modified");
       })
-      navigation2.goBack();
+      navigation.navigate('ItensOrder', {id: route2.params.id})
     } catch (err) {
       console.log('deu erro em algo' + err);
     }

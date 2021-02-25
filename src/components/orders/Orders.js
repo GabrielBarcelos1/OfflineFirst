@@ -2,14 +2,16 @@ import React, {useState, useEffect} from 'react';
 import getRealm from '../../services/realm';
 import Icon from 'react-native-vector-icons/dist/Feather';
 import ItensOrder from '../OrderInfos/OrderInfos';
-import {
-  List,
-  ActionSheet,
-  Root
-} from 'native-base';
+import {List, ActionSheet, Root} from 'native-base';
 import {WebViewLoadContext} from '../../providers/ContextApp';
 import {Container, ContainerList, ContainerAdd, Title} from './style';
-var BUTTONS = ['Editar Pedido', 'Sincronizar Pedido', 'Deletar Pedido', 'Cancelar'];
+
+var BUTTONS = [
+  'Editar Pedido',
+  'Sincronizar Pedido',
+  'Deletar Pedido',
+  'Cancelar',
+];
 var DESTRUCTIVE_INDEX = 2;
 var CANCEL_INDEX = 3;
 
@@ -42,8 +44,8 @@ function Orders({navigation}) {
     }
   }
   function CloseWebViewInsecondplan() {
-    SetWebViewLoad(2);
-    navigation2.navigate('CreateOrder');
+
+    
   }
 
   return (
@@ -76,7 +78,10 @@ function Orders({navigation}) {
                           title: 'ActionSheet',
                         },
                         (buttonIndex) => {
-                           if (buttonIndex === 2) {
+                          if(buttonIndex===0){
+                            navigation.navigate('CreateOrder', {edit: item.idOrder});
+                          }
+                          else if (buttonIndex === 2) {
                             deleteOrder(item.idOrder);
                           }
                         },
@@ -86,7 +91,7 @@ function Orders({navigation}) {
                 </ContainerList>
               );
             }}></List>
-          <ContainerAdd onPress={() => CloseWebViewInsecondplan()}>
+          <ContainerAdd onPress={() => navigation.navigate('CreateOrder', {edit: false})}>
             <Icon name="plus" size={22} color="#fff"></Icon>
           </ContainerAdd>
         </Container>

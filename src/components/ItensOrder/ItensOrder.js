@@ -3,8 +3,16 @@ import {View, Text} from 'react-native';
 import getRealm from '../../services/realm';
 import {WebViewLoadContext} from '../../providers/ContextApp';
 import {Container, ContainerList, ContainerAdd, TextPrimary} from './style';
-import {List} from 'native-base';
+import {List, ActionSheet} from 'native-base';
 import Icon from 'react-native-vector-icons/dist/Feather';
+
+var BUTTONS = [
+  'Editar Item',
+  'Deletar Item',
+  'Cancelar',
+];
+var DESTRUCTIVE_INDEX = 1;
+var CANCEL_INDEX = 2;
 
 function ItensOrder({navigation, route}) {
   const {SetWebViewLoad} = React.useContext(WebViewLoadContext);
@@ -37,6 +45,10 @@ function ItensOrder({navigation, route}) {
                 <ContainerList>
                   <View>
                     <Text>
+                      <TextPrimary>Id que ficara escondido:</TextPrimary>
+                      <Text> {item.idItenOrder}</Text>
+                    </Text>
+                    <Text>
                       <TextPrimary>Id Sku:</TextPrimary>
                       <Text> {item.IdSku}</Text>
                     </Text>
@@ -45,7 +57,23 @@ function ItensOrder({navigation, route}) {
                       <Text>{item.amount}</Text>
                     </Text>
                   </View>
-                  <Icon name="more-vertical" size={22} color="#000" />
+                  <Icon
+                    name="more-vertical"
+                    size={22}
+                    color="#000"
+                    onPress={() =>
+                      ActionSheet.show(
+                        {
+                          options: BUTTONS,
+                          cancelButtonIndex: CANCEL_INDEX,
+                          destructiveButtonIndex: DESTRUCTIVE_INDEX,
+                          title: 'ActionSheet',
+                        },
+                        (buttonIndex) => {
+                        },
+                      )
+                    }
+                  />
                 </ContainerList>
               );
             }}></List>
@@ -56,9 +84,11 @@ function ItensOrder({navigation, route}) {
           name="plus"
           size={22}
           color="#fff"
-          onPress={()=>navigation.navigate('CreateItens', {
-            id: idOrder,
-          })}></Icon>
+          onPress={() =>
+            navigation.navigate('CreateItens', {
+              id: idOrder,
+            })
+          }></Icon>
       </ContainerAdd>
     </Container>
   );
