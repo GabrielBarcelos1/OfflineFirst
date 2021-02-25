@@ -19,7 +19,7 @@ function CreateItens({route, navigation}) {
       const realm = await getRealm();
       const Obj = realm.objects('Order').filtered(`idOrder == ${index}`);
       setarrayItem(Obj[0]);
-      console.log(Obj.itensOrder)
+      console.log(Obj[0].itensOrder)
     }
     pickObject();
   }, []);
@@ -28,28 +28,14 @@ function CreateItens({route, navigation}) {
     try {
       const realm = await getRealm();
       realm.write(() => {
-        arrayItem.itensOrder.push({idItenOrder: 14,  IdSku: InputIdSku, amount: inputAmount});
+        arrayItem.itensOrder.push({idItenOrder: 18,  IdSku: InputIdSku, amount: inputAmount});
+        const data = {
+          idOrder: route2.params.id,
+          itensOrder: arrayItem.itensOrder,
+        };
+        realm.create('Order', data, "modified");
       })
-      // realm.write(() => {
-      //   let teste = arrayItem;
-
-      //   teste.push({
-      //     idItenOrder: 3,
-      //     IdSku: InputIdSku,
-      //     amount: inputAmount,
-      //   });
-      //   setarrayItem(teste);
-      //   console.log(teste);
-      // });
-
-      // realm.write(() => {
-      //   const data = {
-      //     idOrder: route2.params.id,
-      //     itensOrder: arrayItem,
-      //   };
-      //   realm.create('Order', data, true);
-      // });
-      // navigation2.goBack();
+      navigation2.goBack();
     } catch (err) {
       console.log('deu erro em algo' + err);
     }
@@ -57,8 +43,6 @@ function CreateItens({route, navigation}) {
 
   return (
     <View>
-      {console.log(route.params.id)}
-
       <Form>
         <Item floatingLabel>
           <Label>Id SKU</Label>

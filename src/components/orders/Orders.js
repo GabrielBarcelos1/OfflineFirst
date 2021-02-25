@@ -9,7 +9,7 @@ import {
 } from 'native-base';
 import {WebViewLoadContext} from '../../providers/ContextApp';
 import {Container, ContainerList, ContainerAdd, Title} from './style';
-var BUTTONS = ['Editar', 'Sincronizar', 'Deletar', 'Cancelar'];
+var BUTTONS = ['Editar Pedido', 'Sincronizar Pedido', 'Deletar Pedido', 'Cancelar'];
 var DESTRUCTIVE_INDEX = 2;
 var CANCEL_INDEX = 3;
 
@@ -76,10 +76,7 @@ function Orders({navigation}) {
                           title: 'ActionSheet',
                         },
                         (buttonIndex) => {
-                          if(buttonIndex===0){
-                            navigation.navigate('CreateItens', {id: item.idOrder})
-                          }
-                          else if (buttonIndex === 2) {
+                           if (buttonIndex === 2) {
                             deleteOrder(item.idOrder);
                           }
                         },
