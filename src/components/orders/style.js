@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import {getStatusBarHeight} from "react-native-status-bar-height"
 import { ListItem } from 'native-base';
 
+
 export const Container = styled.View`
 flex:1;
 padding-top: ${getStatusBarHeight(true)}px;
@@ -29,4 +30,7 @@ export const Title = styled.Text`
 font-size:18px;
 font-weight:bold;
 text-align:center;
+`
+export const BoxModalView = styled.View`
+flex: 1;
 `

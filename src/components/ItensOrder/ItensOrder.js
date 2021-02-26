@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text} from 'react-native';
 import getRealm from '../../services/realm';
 import {WebViewLoadContext} from '../../providers/ContextApp';
 import {Container, ContainerList, ContainerAdd, TextPrimary} from './style';
 import {List, ActionSheet} from 'native-base';
 import Icon from 'react-native-vector-icons/dist/Feather';
+import { useFocusEffect } from '@react-navigation/native';
 
 var BUTTONS = [
   'Editar Item',
@@ -18,19 +19,37 @@ function ItensOrder({navigation, route}) {
   const {SetWebViewLoad} = React.useContext(WebViewLoadContext);
   const [arrayItens, setArrayItens] = useState('');
   const [idOrder, setIdOrder] = useState('');
+  const [att, setAtt] = useState('');
+  const pickObject = useCallback(() => {
 
-  useEffect(() => {
-    SetWebViewLoad(2);
-    async function pickObject() {
+    async function meuDeus(){
+      SetWebViewLoad(2);
       const index = route.params.id;
       setIdOrder(route.params.id);
       const realm = await getRealm();
       const Obj = realm.objects('Order').filtered(`idOrder == ${index}`);
       setArrayItens(Obj[0].itensOrder);
+      console.log(index)
     }
-    pickObject();
-  }, []);
-
+    meuDeus()
+  }, [route.params.id])
+  
+  useFocusEffect(pickObject)
+  async function deleteItem(index) {
+    try {
+      const realm = await getRealm();
+      
+      const Obj = realm.objects('ItensOrder').filtered(`idItenOrder == ${index}`);
+      console.log(Obj)
+      
+      realm.write(() => {
+        realm.delete(Obj[0]);
+      });
+      setAtt(att+1)
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <Container>
       {arrayItens !== '' && console.log(arrayItens)}
@@ -44,7 +63,7 @@ function ItensOrder({navigation, route}) {
               return (
                 <ContainerList>
                   <View>
-                    <Text>
+                     <Text>
                       <TextPrimary>Id que ficara escondido:</TextPrimary>
                       <Text> {item.idItenOrder}</Text>
                     </Text>
@@ -70,6 +89,9 @@ function ItensOrder({navigation, route}) {
                           title: 'ActionSheet',
                         },
                         (buttonIndex) => {
+                          if (buttonIndex === 1) {
+                          deleteItem(item.idItenOrder)
+                          }
                         },
                       )
                     }

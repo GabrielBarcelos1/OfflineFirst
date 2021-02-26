@@ -3,10 +3,12 @@ import getRealm from '../../services/realm';
 import {View, Label, Form, Item, Input, Button, Text} from 'native-base';
 import {WebViewLoadContext} from '../../providers/ContextApp';
 
+// uuidv4()
+
 function CreateItens({route, navigation}) {
   const {SetWebViewLoad} = React.useContext(WebViewLoadContext);
-  const [InputIdSku, setInputIdSku] = useState(0);
-  const [inputAmount, SetinputAmount] = useState(0);
+  const [InputIdSku, setInputIdSku] = useState("");
+  const [inputAmount, SetinputAmount] = useState("");
   const [arrayItem, setarrayItem] = useState([]);
 
   const route2 = route;
@@ -26,15 +28,20 @@ function CreateItens({route, navigation}) {
   async function handleSave() {
     try {
       const realm = await getRealm();
+      const maxId = realm.objects('ItensOrder').max('idItenOrder')== null
+      ? 0
+      : realm.objects('ItensOrder').max('idItenOrder')
+
       realm.write(() => {
-        arrayItem.itensOrder.push({idItenOrder: 9772,  IdSku: InputIdSku, amount: inputAmount});
+        arrayItem.itensOrder.push({idItenOrder: maxId + 1,  IdSku: InputIdSku, amount: inputAmount});
         const data = {
           idOrder: route2.params.id,
           itensOrder: arrayItem.itensOrder,
         };
         realm.create('Order', data, "modified");
       })
-      navigation.navigate('ItensOrder', {id: route2.params.id})
+      setInputIdSku("")
+      SetinputAmount("")
     } catch (err) {
       console.log('deu erro em algo' + err);
     }
@@ -45,11 +52,11 @@ function CreateItens({route, navigation}) {
       <Form>
         <Item floatingLabel>
           <Label>Id SKU</Label>
-          <Input onChangeText={setInputIdSku} />
+          <Input value={InputIdSku} onChangeText={setInputIdSku} />
         </Item>
         <Item floatingLabel>
           <Label>Quantidade</Label>
-          <Input onChangeText={SetinputAmount} />
+          <Input value={inputAmount}onChangeText={SetinputAmount} />
         </Item>
       </Form>
       <Button onPress={handleSave}>

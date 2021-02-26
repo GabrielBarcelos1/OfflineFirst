@@ -2,9 +2,16 @@ import React, {useState, useEffect} from 'react';
 import getRealm from '../../services/realm';
 import Icon from 'react-native-vector-icons/dist/Feather';
 import ItensOrder from '../OrderInfos/OrderInfos';
-import {List, ActionSheet, Root} from 'native-base';
+import {List, ActionSheet, Root, Text} from 'native-base';
 import {WebViewLoadContext} from '../../providers/ContextApp';
-import {Container, ContainerList, ContainerAdd, Title} from './style';
+import {
+  Container,
+  ContainerList,
+  ContainerAdd,
+  Title,
+  BoxModalView,
+} from './style';
+import Modal from 'react-native-modal';
 
 var BUTTONS = [
   'Editar Pedido',
@@ -19,6 +26,7 @@ function Orders({navigation}) {
   const {SetWebViewLoad} = React.useContext(WebViewLoadContext);
   const [itensOrder, setIntensOrder] = useState([]);
   const navigation2 = navigation;
+  const [modalVisible, setModalVisible] = useState(false);
   useEffect(() => {
     async function ShowAllOrders() {
       try {
@@ -35,7 +43,9 @@ function Orders({navigation}) {
   async function deleteOrder(index) {
     try {
       const realm = await getRealm();
+
       const Obj = realm.objects('Order').filtered(`idOrder == ${index}`);
+
       realm.write(() => {
         realm.delete(Obj);
       });
@@ -43,14 +53,18 @@ function Orders({navigation}) {
       console.log(err);
     }
   }
-  function CloseWebViewInsecondplan() {
-
-    
-  }
-
   return (
     <>
       <Root>
+        <Modal isVisible={modalVisible}>
+          <BoxModalView>
+            <Text>aaa</Text>
+            <Text>aaa</Text>
+            <Text>bbb</Text>
+            <Text>xxxce</Text>
+            <Text onPress={() => setModalVisible(false)}>dddd</Text>
+          </BoxModalView>
+        </Modal>
         <Container>
           <Title>Meus pedidos</Title>
           <List
@@ -78,10 +92,11 @@ function Orders({navigation}) {
                           title: 'ActionSheet',
                         },
                         (buttonIndex) => {
-                          if(buttonIndex===0){
-                            navigation.navigate('CreateOrder', {edit: item.idOrder});
-                          }
-                          else if (buttonIndex === 2) {
+                          if (buttonIndex === 0) {
+                            navigation.navigate('CreateOrder', {
+                              edit: item.idOrder,
+                            });
+                          } else if (buttonIndex === 2) {
                             deleteOrder(item.idOrder);
                           }
                         },
@@ -91,7 +106,11 @@ function Orders({navigation}) {
                 </ContainerList>
               );
             }}></List>
-          <ContainerAdd onPress={() => navigation.navigate('CreateOrder', {edit: false})}>
+
+          <Text onPress={() => setModalVisible(true)}>ative modal</Text>
+
+          <ContainerAdd
+            onPress={() => navigation.navigate('CreateOrder', {edit: false})}>
             <Icon name="plus" size={22} color="#fff"></Icon>
           </ContainerAdd>
         </Container>
