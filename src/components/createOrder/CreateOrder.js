@@ -75,7 +75,7 @@ function CreateOrder({navigation, route}) {
         <Button 
         onPress={handleSave}
         >
-          <Text>Adicionar Pedido</Text>
+          <Text>{route.params.edit !== false ? "Editar Pedido": "Adicionar Pedido"}</Text>
         </Button>
       </Content>
     </Container>

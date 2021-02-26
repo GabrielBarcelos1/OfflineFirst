@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import getRealm from '../../services/realm';
 import Icon from 'react-native-vector-icons/dist/Feather';
 import ItensOrder from '../OrderInfos/OrderInfos';
-import {List, ActionSheet, Root, Text} from 'native-base';
+import {List, ActionSheet, Root, Text, Button} from 'native-base';
 import {WebViewLoadContext} from '../../providers/ContextApp';
 import {
   Container,
@@ -10,6 +10,13 @@ import {
   ContainerAdd,
   Title,
   BoxModalView,
+  BoxModalViewMinor,
+  IconDelete,
+  TitleModal,
+  TextModal,
+  ViewButtonsModal,
+  ButtonCancel,
+  ButtonDelete
 } from './style';
 import Modal from 'react-native-modal';
 
@@ -27,6 +34,7 @@ function Orders({navigation}) {
   const [itensOrder, setIntensOrder] = useState([]);
   const navigation2 = navigation;
   const [modalVisible, setModalVisible] = useState(false);
+  const [idToDelete, setIdToDelete] = useState("");
   useEffect(() => {
     async function ShowAllOrders() {
       try {
@@ -42,6 +50,7 @@ function Orders({navigation}) {
 
   async function deleteOrder(index) {
     try {
+      setModalVisible(false)
       const realm = await getRealm();
 
       const Obj = realm.objects('Order').filtered(`idOrder == ${index}`);
@@ -58,11 +67,22 @@ function Orders({navigation}) {
       <Root>
         <Modal isVisible={modalVisible}>
           <BoxModalView>
-            <Text>aaa</Text>
-            <Text>aaa</Text>
-            <Text>bbb</Text>
-            <Text>xxxce</Text>
-            <Text onPress={() => setModalVisible(false)}>dddd</Text>
+            <BoxModalViewMinor>
+              <IconDelete name="x-square" size={60} color="#D9534F"></IconDelete>
+              <TitleModal>Voce tem certeza?</TitleModal>
+              <TextModal>
+                Voce tem certeza que deseja excluir o pedido? esse processo nao
+                pode ser desfeito
+              </TextModal>
+              <ViewButtonsModal>
+                <ButtonCancel light onPress={() => setModalVisible(false)}>
+                  <Text> Cancelar </Text>
+                </ButtonCancel>
+                <ButtonDelete danger >
+                  <Text onPress={()=>deleteOrder(idToDelete)}>Apagar</Text>
+                </ButtonDelete>
+              </ViewButtonsModal>
+            </BoxModalViewMinor>
           </BoxModalView>
         </Modal>
         <Container>
@@ -97,7 +117,8 @@ function Orders({navigation}) {
                               edit: item.idOrder,
                             });
                           } else if (buttonIndex === 2) {
-                            deleteOrder(item.idOrder);
+                            setModalVisible(true);
+                            setIdToDelete(item.idOrder)
                           }
                         },
                       )
@@ -106,9 +127,6 @@ function Orders({navigation}) {
                 </ContainerList>
               );
             }}></List>
-
-          <Text onPress={() => setModalVisible(true)}>ative modal</Text>
-
           <ContainerAdd
             onPress={() => navigation.navigate('CreateOrder', {edit: false})}>
             <Icon name="plus" size={22} color="#fff"></Icon>
