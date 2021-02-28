@@ -89,7 +89,7 @@ function CreateItens({route, navigation}) {
         </Item>
       </Form>
       <Button onPress={handleSave}>
-        <Text>{route.params.edit !== false ? "Editar itens" :  "Adicionar Itens ao pedido"}</Text>
+        <Text>{route.params.edit !== false ? "Editar item" :  "Adicionar Item ao pedido"}</Text>
       </Button>
     </View>
   );
