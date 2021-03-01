@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import getRealm from '../../services/realm';
-import {View, Label, Form, Item, Input, Button, Text} from 'native-base';
+import {View, Label, Form, Input, Button, Text} from 'native-base';
 import {WebViewLoadContext} from '../../providers/ContextApp';
-
-// uuidv4()
+import {ContainerButton, ItemButton} from './style';
 
 function CreateItens({route, navigation}) {
   const {SetWebViewLoad} = React.useContext(WebViewLoadContext);
@@ -49,7 +48,7 @@ function CreateItens({route, navigation}) {
           };
           realm.create('ItensOrder', dataItem, 'modified');
         });
-        navigation.navigate("ItensOrder")
+        navigation.navigate('ItensOrder');
       } else {
         const maxId =
           realm.objects('ItensOrder').max('idItenOrder') == null
@@ -79,18 +78,24 @@ function CreateItens({route, navigation}) {
   return (
     <View>
       <Form>
-        <Item floatingLabel>
-          <Label>Id SKU</Label>
-          <Input value={InputIdSku} onChangeText={setInputIdSku} />
-        </Item>
-        <Item floatingLabel>
-          <Label>Quantidade</Label>
-          <Input value={inputAmount} onChangeText={SetinputAmount} />
-        </Item>
+        <ItemButton floatingLabel >
+          <Label >Id SKU</Label>
+          <Input value={InputIdSku} onChangeText={setInputIdSku}/>
+        </ItemButton>
+        <ItemButton floatingLabel >
+          <Label >Quantidade</Label>
+          <Input value={inputAmount} onChangeText={SetinputAmount}/>
+        </ItemButton>
       </Form>
-      <Button onPress={handleSave}>
-        <Text>{route.params.edit !== false ? "Editar item" :  "Adicionar Item ao pedido"}</Text>
-      </Button>
+      <ContainerButton>
+        <Button onPress={handleSave}>
+          <Text>
+            {route.params.edit !== false
+              ? 'Editar item'
+              : 'Adicionar Item ao pedido'}
+          </Text>
+        </Button>
+      </ContainerButton>
     </View>
   );
 }

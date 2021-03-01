@@ -1,10 +1,11 @@
 import styled from 'styled-components'
-import {
-  Content,
-} from 'native-base';
+import {Item} from 'native-base'
 
-export const ContainerInput = styled(Content)`
+export const ContainerButton = styled.View`
+
 background-color:red;
-flex-direction:column;
-justify-content:space-between
+margin: 20px auto;
+`
+export const ItemButton = styled(Item)`
+margin: 0px 20px;
 `

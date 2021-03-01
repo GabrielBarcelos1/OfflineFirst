@@ -3,12 +3,12 @@ import {
   Container,
   Content,
   Form,
-  Item,
   Input,
   Label,
   Text,
   Button,
 } from 'native-base';
+import{ContainerButton, ItemButton} from './style'
 import getRealm from '../../services/realm';
 import {WebViewLoadContext} from '../../providers/ContextApp';
 
@@ -67,16 +67,18 @@ function CreateOrder({navigation, route}) {
     <Container>
       <Content>
         <Form>
-          <Item floatingLabel>
+          <ItemButton floatingLabel style={{marginHorizontal:20}}>
             <Label>Nome do Pedido: </Label>
             <Input value={valueOrderName} onChangeText={setValueOrderName} />
-          </Item>
+          </ItemButton>
         </Form>
-        <Button 
+        <ContainerButton>
+        <Button
         onPress={handleSave}
         >
           <Text>{route.params.edit !== false ? "Editar Pedido": "Adicionar Pedido"}</Text>
         </Button>
+        </ContainerButton>
       </Content>
     </Container>
   );

@@ -30,9 +30,7 @@ var DESTRUCTIVE_INDEX = 2;
 var CANCEL_INDEX = 3;
 
 function Orders({navigation}) {
-  const {SetWebViewLoad} = React.useContext(WebViewLoadContext);
   const [itensOrder, setIntensOrder] = useState([]);
-  const navigation2 = navigation;
   const [modalVisible, setModalVisible] = useState(false);
   const [idToDelete, setIdToDelete] = useState("");
   useEffect(() => {
@@ -116,7 +114,9 @@ function Orders({navigation}) {
                             navigation.navigate('CreateOrder', {
                               edit: item.idOrder,
                             });
-                          } else if (buttonIndex === 2) {
+                          }else if(buttonIndex === 1){
+                            navigation.navigate('E-Commerce',{jsToInject: `com o carrinho montado, pedido numero: ${item.idOrder}` });
+                          }else if (buttonIndex === 2) {
                             setModalVisible(true);
                             setIdToDelete(item.idOrder)
                           }

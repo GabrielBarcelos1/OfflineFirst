@@ -6,6 +6,7 @@ import CreateOrder from './src/components/createOrder/CreateOrder';
 import CreateItens from './src/components/createItens/CreateItens';
 import ItensOrder from './src/components/itensOrder/ItensOrder';
 import {ContextApp} from './src/providers/ContextApp';
+import Icon from 'react-native-vector-icons/Feather';
 
 
 import {NavigationContainer} from '@react-navigation/native';
@@ -18,7 +19,19 @@ const Tab = createBottomTabNavigator();
 
 function TabsComponent() {
   return (
-    <Tab.Navigator detachInactiveScreens>
+    <Tab.Navigator detachInactiveScreens screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
+
+        if (route.name === 'E-Commerce') {
+          iconName = "home"
+        } else if (route.name === 'Pedidos Offline') {
+          iconName = "wifi-off"
+        }
+
+        return <Icon name={iconName} size={size} color={color} />;
+      },
+    })}>
       <Tab.Screen name="E-Commerce" component={Home} />
       <Tab.Screen name="Pedidos Offline" component={Orders} />
     </Tab.Navigator>
