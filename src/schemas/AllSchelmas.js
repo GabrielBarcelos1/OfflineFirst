@@ -13,9 +13,10 @@ export const Order = {
 
 export const ItensOrder = {
   name: "ItensOrder",
-    primaryKey: "IdSku",
+    primaryKey: "idItenOrder",
     properties: {
-      IdSku:{type: 'int', indexed : true},
+      idItenOrder:{type: 'int', indexed : true},
+      IdSku:'string',
       amount: "string",
 
   }

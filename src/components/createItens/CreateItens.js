@@ -1,68 +1,101 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import getRealm from '../../services/realm';
-import {View, Label, Form, Item, Input, Button, Text} from 'native-base';
+import {View, Label, Form, Input, Button, Text} from 'native-base';
+import {WebViewLoadContext} from '../../providers/ContextApp';
+import {ContainerButton, ItemButton} from './style';
 
 function CreateItens({route, navigation}) {
-  var arrayItem = [
-    {
-      IdSku: 1,
-      amount: '22',
-    },
-    {
-      IdSku: 1,
-      amount: '22',
-    },
-  ]
+  const {SetWebViewLoad} = React.useContext(WebViewLoadContext);
+  const [InputIdSku, setInputIdSku] = useState('');
+  const [inputAmount, SetinputAmount] = useState('');
+  const [arrayItem, setarrayItem] = useState([]);
+
   const route2 = route;
-  const navigation2 = navigation;
+
+  useEffect(() => {
+    SetWebViewLoad(2);
+    async function pickObject() {
+      if (route.params.edit !== false) {
+        const realm = await getRealm();
+        const Obj = realm
+          .objects('ItensOrder')
+          .filtered(`idItenOrder == ${route.params.edit}`);
+        setInputIdSku(Obj[0].IdSku);
+        SetinputAmount(Obj[0].amount);
+        console.log('é pra editar');
+        console.log(Obj);
+      } else {
+        console.log('Nao é pra editar');
+      }
+      const index = route.params.id;
+      const realm = await getRealm();
+      const Obj = realm.objects('Order').filtered(`idOrder == ${index}`);
+      setarrayItem(Obj[0]);
+      console.log(Obj[0].itensOrder);
+    }
+    pickObject();
+  }, []);
+
   async function handleSave() {
     try {
       const realm = await getRealm();
+      if (route.params.edit !== false) {
+        realm.write(() => {
+          const dataItem = {
+            idItenOrder: route.params.edit,
+            IdSku: InputIdSku,
+            amount: inputAmount,
+          };
+          realm.create('ItensOrder', dataItem, 'modified');
+        });
+        navigation.navigate('ItensOrder');
+      } else {
+        const maxId =
+          realm.objects('ItensOrder').max('idItenOrder') == null
+            ? 0
+            : realm.objects('ItensOrder').max('idItenOrder');
 
-      const data = {
-        idOrder: route2.params.id,
-        itensOrder: arrayItem,
-      };
-
-      realm.write(() => {
-        realm.create('Order', data, 'modified');
-      });
-      navigation2.navigate('Orders');
+        realm.write(() => {
+          arrayItem.itensOrder.push({
+            idItenOrder: maxId + 1,
+            IdSku: InputIdSku,
+            amount: inputAmount,
+          });
+          const data = {
+            idOrder: route2.params.id,
+            itensOrder: arrayItem.itensOrder,
+          };
+          realm.create('Order', data, 'modified');
+        });
+        setInputIdSku('');
+        SetinputAmount('');
+      }
     } catch (err) {
       console.log('deu erro em algo' + err);
     }
   }
-  function attInputIdSku(index,val){
-    const values = [...arrayItem];
-    values[index].IdSku = Number(val);
-  }
-  function attInputAmount(index,val){
-    const values = [...arrayItem];
-    values[index].amount = val;
-  }
+
   return (
     <View>
-      {console.log(route.params.id)}
-
-      {arrayItem.map((form, key) => {
-        return (
-          <Form key={key}>
-            <Item floatingLabel>
-              <Label>Id SKU</Label>
-              <Input  onChangeText={(val)=>attInputIdSku(key,val === "" ? 0 : val)} />
-            </Item>
-            <Item floatingLabel>
-              <Label>Quantidade</Label>
-              <Input
-                onChangeText={(val) => attInputAmount(key,val)}
-              />
-            </Item>
-          </Form>
-        );
-      })}
-      <Button onPress={handleSave}>
-        <Text>Adicionar Itens ao pedido</Text>
-      </Button>
+      <Form>
+        <ItemButton floatingLabel >
+          <Label >Id SKU</Label>
+          <Input value={InputIdSku} onChangeText={setInputIdSku}/>
+        </ItemButton>
+        <ItemButton floatingLabel >
+          <Label >Quantidade</Label>
+          <Input value={inputAmount} onChangeText={SetinputAmount}/>
+        </ItemButton>
+      </Form>
+      <ContainerButton>
+        <Button onPress={handleSave}>
+          <Text>
+            {route.params.edit !== false
+              ? 'Editar item'
+              : 'Adicionar Item ao pedido'}
+          </Text>
+        </Button>
+      </ContainerButton>
     </View>
   );
 }
