@@ -34,7 +34,7 @@ function ItensOrder({navigation, route}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [idToDelete, setIdToDelete] = useState('');
   const pickObject = useCallback(() => {
-    async function meuDeus() {
+    async function asyncPickObject() {
       SetWebViewLoad(2);
       const index = route.params.id;
       setIdOrder(route.params.id);
@@ -43,7 +43,7 @@ function ItensOrder({navigation, route}) {
       setArrayItens(Obj[0].itensOrder);
       console.log(index);
     }
-    meuDeus();
+    asyncPickObject();
   }, [route.params.id]);
 
   useFocusEffect(pickObject);

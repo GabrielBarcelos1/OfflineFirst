@@ -3,10 +3,7 @@ import getRealm from '../../services/realm';
 import Icon from 'react-native-vector-icons/dist/Feather';
 
 import ItensOrder from '../OrderInfos/OrderInfos';
-import {List, ActionSheet, Root, Text, Button} from 'native-base';
-import {WebViewLoadContext} from '../../providers/ContextApp';
-import ItensOrder from '../OrderInfos/OrderInfos';
-import {List, ActionSheet, Root, Text, Button} from 'native-base';
+import {List, ActionSheet, Root, Text} from 'native-base';
 import {WebViewLoadContext} from '../../providers/ContextApp';
 import {
   Container,
@@ -119,7 +116,7 @@ function Orders({navigation}) {
                               edit: item.idOrder,
                             });
                           }else if(buttonIndex === 1){
-                            navigation.navigate('E-Commerce',{jsToInject: `com o carrinho montado, pedido numero: ${item.idOrder}` });
+                            navigation.navigate('E-Commerce',{jsToInject: item.idOrder });
                           }else if (buttonIndex === 2) {
                             setModalVisible(true);
                             setIdToDelete(item.idOrder)
