@@ -5,6 +5,8 @@ import Icon from 'react-native-vector-icons/dist/Feather';
 import ItensOrder from '../OrderInfos/OrderInfos';
 import {List, ActionSheet, Root, Text} from 'native-base';
 import {WebViewLoadContext} from '../../providers/ContextApp';
+import { useFocusEffect } from '@react-navigation/native';
+
 import {
   Container,
   ContainerList,
@@ -31,9 +33,12 @@ var DESTRUCTIVE_INDEX = 2;
 var CANCEL_INDEX = 3;
 
 function Orders({navigation}) {
+  
   const [itensOrder, setIntensOrder] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [idToDelete, setIdToDelete] = useState("");
+  const { setArrayItensToInject} = React.useContext(WebViewLoadContext);
+
   useEffect(() => {
     async function ShowAllOrders() {
       try {
@@ -116,6 +121,7 @@ function Orders({navigation}) {
                               edit: item.idOrder,
                             });
                           }else if(buttonIndex === 1){
+                            setArrayItensToInject([])
                             navigation.navigate('E-Commerce',{jsToInject: item.idOrder });
                           }else if (buttonIndex === 2) {
                             setModalVisible(true);

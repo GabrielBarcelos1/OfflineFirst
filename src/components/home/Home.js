@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useCallback,useEffect} from 'react'
 import {Container} from './style'
 import { WebView } from 'react-native-webview';
 import {WebViewLoadContext} from '../../providers/ContextApp'
@@ -10,47 +10,57 @@ import getRealm from '../../services/realm';
 
 
 function Home({navigation, route}){
-  const { webViewLoad, SetWebViewLoad } = React.useContext(WebViewLoadContext);
+  const { webViewLoad, SetWebViewLoad, arrayItensToInject,setArrayItensToInject} = React.useContext(WebViewLoadContext);
   const [jstoInject, setJstoInject] = useState("")
   const [checkoutToUrl, setCheckoutToUrl] = useState("/")
-  const [arrayItensToInject, setArrayItensToInject] = useState([])
   
-  useFocusEffect(()=>{
 
-    async function teste(){
+
+  const pickObject =  useCallback(() => {
+
+    async function meuDeus(){
+      
       SetWebViewLoad(1)
       const realm = await getRealm();
       if(route.params?.jsToInject === undefined){
-        return
+        setJstoInject("")
       }else{
+        setCheckoutToUrl("/checkout")
         const Obj = realm.objects('Order').filtered(`idOrder == ${route.params?.jsToInject}`);
         let arrayItens = Obj[0].itensOrder
-
+    
         arrayItens.map((item)=>{
-          let arrayItensInMap = arrayItensToInject
           let teste = {
             id: item.IdSku,
             quantity: item.amount,
             seller: "1",
           }
-          arrayItensInMap.push(teste)
-
-          setArrayItensToInject(arrayItensInMap)
-
+          let aux = arrayItensToInject
+          aux.push(teste)
+          setArrayItensToInject(aux)
         })
         console.log(arrayItensToInject)
-        setJstoInject(
-          `vtexjs.checkout.addToCart(arrayItensToInject, 1, 1).done(function(orderForm) {console.log(orderForm);});`
-          )
-        setCheckoutToUrl("/checkout")
-      }
-      
-      
-    }
 
-    teste()
-  
-  })
+        let bbb = JSON.stringify(arrayItensToInject)
+        
+      
+
+        let aaa = ` vtexjs.checkout.removeAllItems()
+        .done(function(orderForm) {
+          console.log(orderForm);
+        });vtexjs.checkout.addToCart(${bbb}, 1, 1)
+        .done(function(orderForm) {
+          console.log(orderForm);
+        });`
+        setJstoInject(aaa)
+        console.log(bbb)
+        
+      }
+
+    }
+    meuDeus()
+      }, [route.params?.jsToInject])
+  useFocusEffect(pickObject)
   return(
     <Container>
       {webViewLoad==1 &&
