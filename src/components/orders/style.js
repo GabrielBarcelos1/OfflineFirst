@@ -27,11 +27,6 @@ right: 40px;
 align-items:center;
 justify-content:center;
 `
-export const Title = styled.Text`
-font-size:18px;
-font-weight:bold;
-text-align:center;
-`
 export const BoxModalView = styled.View`
 flex: 1;
 align-items:center;

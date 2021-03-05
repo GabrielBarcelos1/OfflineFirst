@@ -5,13 +5,12 @@ import Icon from 'react-native-vector-icons/dist/Feather';
 import ItensOrder from '../OrderInfos/OrderInfos';
 import {List, ActionSheet, Root, Text} from 'native-base';
 import {WebViewLoadContext} from '../../providers/ContextApp';
-import { useFocusEffect } from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 
 import {
   Container,
   ContainerList,
   ContainerAdd,
-  Title,
   BoxModalView,
   BoxModalViewMinor,
   IconDelete,
@@ -19,7 +18,7 @@ import {
   TextModal,
   ViewButtonsModal,
   ButtonCancel,
-  ButtonDelete
+  ButtonDelete,
 } from './style';
 import Modal from 'react-native-modal';
 
@@ -33,11 +32,12 @@ var DESTRUCTIVE_INDEX = 2;
 var CANCEL_INDEX = 3;
 
 function Orders({navigation}) {
-  
   const [itensOrder, setIntensOrder] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [idToDelete, setIdToDelete] = useState("");
-  const { setArrayItensToInject} = React.useContext(WebViewLoadContext);
+  const [idToDelete, setIdToDelete] = useState('');
+  const {setArrayItensToInject,currentUrl, setControllPage} = React.useContext(
+    WebViewLoadContext
+  );
 
   useEffect(() => {
     async function ShowAllOrders() {
@@ -54,7 +54,7 @@ function Orders({navigation}) {
 
   async function deleteOrder(index) {
     try {
-      setModalVisible(false)
+      setModalVisible(false);
       const realm = await getRealm();
 
       const Obj = realm.objects('Order').filtered(`idOrder == ${index}`);
@@ -72,7 +72,10 @@ function Orders({navigation}) {
         <Modal isVisible={modalVisible}>
           <BoxModalView>
             <BoxModalViewMinor>
-              <IconDelete name="x-square" size={60} color="#D9534F"></IconDelete>
+              <IconDelete
+                name="x-square"
+                size={60}
+                color="#D9534F"></IconDelete>
               <TitleModal>Voce tem certeza?</TitleModal>
               <TextModal>
                 Voce tem certeza que deseja excluir o pedido? esse processo nao
@@ -82,15 +85,14 @@ function Orders({navigation}) {
                 <ButtonCancel light onPress={() => setModalVisible(false)}>
                   <Text> Cancelar </Text>
                 </ButtonCancel>
-                <ButtonDelete danger >
-                  <Text onPress={()=>deleteOrder(idToDelete)}>Apagar</Text>
+                <ButtonDelete danger>
+                  <Text onPress={() => deleteOrder(idToDelete)}>Apagar</Text>
                 </ButtonDelete>
               </ViewButtonsModal>
             </BoxModalViewMinor>
           </BoxModalView>
         </Modal>
         <Container>
-          <Title>Meus pedidos</Title>
           <List
             keyboardShouldPersistTaps="handled"
             dataArray={itensOrder}
@@ -120,12 +122,16 @@ function Orders({navigation}) {
                             navigation.navigate('CreateOrder', {
                               edit: item.idOrder,
                             });
-                          }else if(buttonIndex === 1){
-                            setArrayItensToInject([])
-                            navigation.navigate('E-Commerce',{jsToInject: item.idOrder });
-                          }else if (buttonIndex === 2) {
+                          } else if (buttonIndex === 1) {
+                            setArrayItensToInject([]);
+                            setControllPage(1)
+                            navigation.navigate('E-Commerce', {
+                              jsToInject: item.idOrder,
+                            });
+                           
+                          } else if (buttonIndex === 2) {
                             setModalVisible(true);
-                            setIdToDelete(item.idOrder)
+                            setIdToDelete(item.idOrder);
                           }
                         },
                       )
