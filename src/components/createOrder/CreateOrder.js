@@ -1,14 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {
-  Container,
-  Content,
   Form,
   Input,
   Label,
   Text,
-  Button,
+  Item
 } from 'native-base';
-import{ContainerButton, ItemButton} from './style'
+import{ButtonAdd , MajorContainer} from './style'
 import getRealm from '../../services/realm';
 import {WebViewLoadContext} from '../../providers/ContextApp';
 
@@ -64,23 +62,20 @@ function CreateOrder({navigation, route}) {
     }
   }
   return (
-    <Container>
-      <Content>
+    <MajorContainer>
         <Form>
-          <ItemButton floatingLabel style={{marginHorizontal:20}}>
+          <Item stackedLabel style={{marginHorizontal:20}}>
             <Label>Nome do Pedido: </Label>
             <Input value={valueOrderName} onChangeText={setValueOrderName} />
-          </ItemButton>
+          </Item>
         </Form>
-        <ContainerButton>
-        <Button
+        <ButtonAdd
         onPress={handleSave}
+        block 
         >
           <Text>{route.params.edit !== false ? "Editar Pedido": "Adicionar Pedido"}</Text>
-        </Button>
-        </ContainerButton>
-      </Content>
-    </Container>
+        </ButtonAdd>
+    </MajorContainer>
   );
 }
 export default CreateOrder;

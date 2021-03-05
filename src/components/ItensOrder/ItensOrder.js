@@ -15,7 +15,7 @@ import {
   ButtonDelete,
   BoxModalView,
   BoxModalViewMinor,
-  TextButtonDelete
+  TextButtonDelete,
 } from './style';
 import {List, ActionSheet} from 'native-base';
 import Icon from 'react-native-vector-icons/dist/Feather';
@@ -72,7 +72,10 @@ function ItensOrder({navigation, route}) {
           <Modal isVisible={modalVisible}>
             <BoxModalView>
               <BoxModalViewMinor>
-                <IconDelete name="x-square" size={60} color="#D9534F"></IconDelete>
+                <IconDelete
+                  name="x-square"
+                  size={60}
+                  color="#D9534F"></IconDelete>
                 <TitleModal>Voce tem certeza?</TitleModal>
                 <TextModal>
                   Voce tem certeza que deseja excluir o pedido? esse processo
@@ -83,7 +86,9 @@ function ItensOrder({navigation, route}) {
                     <Text> Cancelar </Text>
                   </ButtonCancel>
                   <ButtonDelete danger>
-                    <TextButtonDelete onPress={() => deleteItem(idToDelete)}>Apagar</TextButtonDelete>
+                    <TextButtonDelete onPress={() => deleteItem(idToDelete)}>
+                      Apagar
+                    </TextButtonDelete>
                   </ButtonDelete>
                 </ViewButtonsModal>
               </BoxModalViewMinor>
@@ -120,9 +125,11 @@ function ItensOrder({navigation, route}) {
                         },
                         (buttonIndex) => {
                           if (buttonIndex === 0) {
-                            navigation.navigate('CreateItens', {id: idOrder, edit: item.idItenOrder})
-                          }
-                          else if (buttonIndex === 1) {
+                            navigation.navigate('CreateItens', {
+                              id: idOrder,
+                              edit: item.idItenOrder,
+                            });
+                          } else if (buttonIndex === 1) {
                             setModalVisible(true);
                             setIdToDelete(item.idItenOrder);
                           }
@@ -135,14 +142,11 @@ function ItensOrder({navigation, route}) {
             }}></List>
         </>
       )}
-      <ContainerAdd>
-        <Icon
-          name="plus"
-          size={22}
-          color="#fff"
-          onPress={() =>
-            navigation.navigate('CreateItens', {id: idOrder, edit: false})
-          }></Icon>
+      <ContainerAdd
+        onPress={() =>
+          navigation.navigate('CreateItens', {id: idOrder, edit: false})
+        }>
+        <Icon name="plus" size={22} color="#fff"></Icon>
       </ContainerAdd>
     </Container>
   );

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import getRealm from '../../services/realm';
-import {View, Label, Form, Input, Button, Text} from 'native-base';
+import {View, Label, Form, Input, Text ,Item} from 'native-base';
 import {WebViewLoadContext} from '../../providers/ContextApp';
-import {ContainerButton, ItemButton} from './style';
+import {ButtonAdd,MajorView} from './style';
 
 function CreateItens({route, navigation}) {
   const {SetWebViewLoad} = React.useContext(WebViewLoadContext);
@@ -76,27 +76,25 @@ function CreateItens({route, navigation}) {
   }
 
   return (
-    <View>
+    <MajorView>
       <Form>
-        <ItemButton floatingLabel >
+        <Item stackedLabel >
           <Label >Id SKU</Label>
           <Input value={InputIdSku} onChangeText={setInputIdSku}/>
-        </ItemButton>
-        <ItemButton floatingLabel >
+        </Item>
+        <Item stackedLabel >
           <Label >Quantidade</Label>
           <Input value={inputAmount} onChangeText={SetinputAmount}/>
-        </ItemButton>
+        </Item>
       </Form>
-      <ContainerButton>
-        <Button onPress={handleSave}>
+        <ButtonAdd onPress={handleSave} block >
           <Text>
             {route.params.edit !== false
               ? 'Editar item'
               : 'Adicionar Item ao pedido'}
           </Text>
-        </Button>
-      </ContainerButton>
-    </View>
+        </ButtonAdd>
+    </MajorView>
   );
 }
 

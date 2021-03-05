@@ -78,18 +78,7 @@ function App() {
                   },
               headerTitle: "Meus pedidos",
               headerShown: getHeaderDisplay(route)
-            })}
-            // options={{
-            //   title: 'Meus pedidos',
-            //   headerStyle: {
-            //     backgroundColor: '#184077',
-            //   },
-            //   headerTintColor: '#fff',
-            //   headerTitleStyle: {
-            //     fontWeight: 'bold',
-            //   },
-            // }}
-            
+            })}          
           />
           <Stack.Screen name="ItensOrder" component={ItensOrder} options={{
           title: 'Itens do Pedidos',

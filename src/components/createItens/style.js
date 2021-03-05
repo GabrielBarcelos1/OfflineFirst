@@ -1,12 +1,13 @@
 import styled from 'styled-components'
-import {Item} from 'native-base'
+import {Item, Button} from 'native-base'
 
-export const ContainerButton = styled.View`
 
-background-color:red;
-margin: 20px auto;
+export const MajorView = styled.View`
+flex:1;
+background-color: white;
+
 `
-
-export const ItemButton = styled(Item)`
-margin: 10px 20px;
+export const ButtonAdd = styled(Button)`
+margin-top:30px;
+background-color:#184077;
 `
